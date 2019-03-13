@@ -1,0 +1,36 @@
+{
+  "id": "ff4c2f67-8234-4e99-92ac-3e55b41a920c",
+  "name": "Reprompt on no input",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [],
+      "messages": [
+        {
+          "type": 0,
+          "lang": "en",
+          "speech": [
+            "What was that?",
+            "Sorry, I didn\u0027t catch that. Could you repeat yourself?",
+            "Okay, let\u0027s try this again later."
+          ]
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "speech": []
+    }
+  ],
+  "priority": 500000,
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "lastUpdate": 1542136602,
+  "fallbackIntent": false,
+  "events": [
+    {
+      "name": "actions_intent_NO_INPUT"
+    }
+  ]
+}
