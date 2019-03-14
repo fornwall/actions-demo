@@ -59,9 +59,7 @@ public class MyActionsApp extends DialogflowApp {
   public ActionResponse bye(ActionRequest request) {
     LOGGER.info("Bye intent start.");
     ResponseBuilder responseBuilder = getResponseBuilder(request);
-    ResourceBundle rb = ResourceBundle.getBundle("resources", LOCALE);
-
-    responseBuilder.add(rb.getString("bye")).endConversation();
+    responseBuilder.add("Bye dear user");
     LOGGER.info("Bye intent end.");
     return responseBuilder.build();
   }

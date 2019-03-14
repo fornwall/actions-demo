@@ -24,37 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController("/")
 public class ActionsController {
+
   private static final Logger LOG = LoggerFactory.getLogger(MyActionsApp.class);
   private final App actionsApp = new MyActionsApp();
 
-
-  @GetMapping
-  public String helloGradle() {
-    return "Hello Gradle!";
-  }
-
   @PostMapping
-  protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-    String body = req.getReader().lines().collect(Collectors.joining());
-    LOG.info("doPost, body = {}", body);
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    var requestHeaders = getHeadersMap(request);
+    var requestBody = request.getReader().lines().collect(Collectors.joining());
 
     try {
-      String jsonResponse = actionsApp.handleRequest(body, getHeadersMap(req)).get();
-      LOG.info("Generated json = {}", jsonResponse);
-      res.setContentType("application/json");
-      writeResponse(res, jsonResponse);
-    } catch (InterruptedException e) {
-      handleError(res, e);
-    } catch (ExecutionException e) {
-      handleError(res, e);
-    }
-  }
-
-  private void writeResponse(HttpServletResponse res, String asJson) {
-    try {
-      res.getWriter().write(asJson);
-    } catch (IOException e) {
-      e.printStackTrace();
+      LOG.info("Request body = {}", requestBody);
+      String jsonResponse = actionsApp.handleRequest(requestBody, requestHeaders).get();
+      LOG.info("Response json = {}", jsonResponse);
+      response.setContentType("application/json");
+      response.getWriter().write(jsonResponse);
+    } catch (Exception e) {
+      handleError(response, e);
     }
   }
 
@@ -69,7 +55,7 @@ public class ActionsController {
   }
 
   private Map<String, String> getHeadersMap(HttpServletRequest request) {
-    Map<String, String> map = new HashMap();
+    Map<String, String> map = new HashMap<>();
 
     Enumeration headerNames = request.getHeaderNames();
     while (headerNames.hasMoreElements()) {
