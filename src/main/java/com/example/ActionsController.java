@@ -1,21 +1,18 @@
 package com.example;
 
-import com.google.actions.api.App;
+import com.google.actions.api.DialogflowApp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.stream.Collectors;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Handles request received via HTTP POST and delegates it to your Actions app. See: [Request
@@ -26,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ActionsController {
 
   private static final Logger LOG = LoggerFactory.getLogger(MyActionsApp.class);
-  private final App actionsApp = new MyActionsApp();
+  private final DialogflowApp actionsApp = new MyActionsApp();
 
   @PostMapping
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
